@@ -13,7 +13,7 @@ resource "aws_vpc" "custom_vpc" {
 variable "vpc_availability_zone" {
   type        = list(string)
   description = "Availability zone"
-  default     = ["us-west-1b", "us-west-1c"]
+  default     = ["us-east-1a","us-east-1b", "us-east-1c"]
 }
 
 resource "aws_subnet" "public_subnet" {

@@ -1,14 +1,14 @@
 pipeline {
     agent any
     environment {
-        AWS_REGION = 'us-east-1' 
+        AWS_REGION = 'us-west-1' 
     }
     stages {
         stage('Set AWS Credentials') {
             steps {
                 withCredentials([[
                     $class: 'AmazonWebServicesCredentialsBinding',
-                    credentialsId: 'awsDockerJenkins' 
+                    credentialsId: 'AWS_Credentials' 
                 ]]) {
                     sh '''
                     echo "AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID"
@@ -19,7 +19,7 @@ pipeline {
         }
         stage('Checkout Code') {
             steps {
-                git branch: 'main', url: 'https://github.com/LarvariousM/JenkinsExperiment1' 
+                git branch: 'main', url: 'https://github.com/yahweh90/JenkinsExperiment1' 
             }
         }
         stage('Initialize Terraform') {
@@ -33,7 +33,7 @@ pipeline {
             steps {
                 withCredentials([[
                     $class: 'AmazonWebServicesCredentialsBinding',
-                    credentialsId: 'awsDockerJenkins'
+                    credentialsId: 'AWS_Credentials'
                 ]]) {
                     sh '''
                     export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
@@ -48,7 +48,7 @@ pipeline {
                 input message: "Approve Terraform Apply?", ok: "Deploy"
                 withCredentials([[
                     $class: 'AmazonWebServicesCredentialsBinding',
-                    credentialsId: 'awsDockerJenkins'
+                    credentialsId: 'AWS_Credentials'
                 ]]) {
                     sh '''
                     export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID

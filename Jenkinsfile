@@ -71,7 +71,7 @@
 pipeline{
     agent any
     tools {
-        jfrog 'jfrog-cli-latest'
+        jfrog 'jfrog-cli'
     }
     stages {
         stage ('Testing') {
